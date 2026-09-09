@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Elevator Simulation Control Center</title>
+        <link rel="stylesheet" href="css/style.css">
+        <script src="/socket.io/socket.io.js"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <header>
+                <h1>Elevator Simulation Control Center</h1>
+                <div id="simTick" class="tick-badge">Tick: 0</div>
+            </header>
+
+            <main class="dashboard">
+                <!-- Left Controls & Metrics Panel -->
+                <section class="panel control-panel">
+                    <h2>Configuration</h2>
+                    <form id="configForm">
+                        <div class="form-group">
+                            <label for="numCars">Elevator Cars</label>
+                            <input type="number" id="numCars" value="3" min="1" max="8">
+                        </div>
+                        <div class="form-group">
+                            <label for="numFloors">Floors</label>
+                            <input type="number" id="numFloors" value="10" min="2" max="30">
+                        </div>
+                        <div class="form-group">
+                            <label for="carCapacity">Car Capacity</label>
+                            <input type="number" id="carCapacity" value="8" min="1" max="20">
+                        </div>
+                        <div class="form-group">
+                            <label for="totalTraffic">Total Traffic (Passengers)</label>
+                            <input type="number" id="totalTraffic" value="25" min="1" max="200">
+                        </div>
+                        <div class="form-group">
+                            <label for="trafficMode">Traffic Pattern Mode</label>
+                            <select id="trafficMode">
+                                <option value="balanced">Balanced (Random)</option>
+                                <option value="morning">Morning Up-Peak</option>
+                                <option value="evening">Evening Down-Peak</option>
+                            </select>
+                        </div>
+                        <button type="submit" id="btnStart" class="btn btn-primary">Start Simulation</button>
+                    </form>
+
+                    <h2 class="section-title">Passenger Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-card">
+                            <span class="metric-value" id="mWaiting">0</span>
+                            <span class="metric-label">Waiting</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" id="mOnboard">0</span>
+                            <span class="metric-label">Onboard</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" id="mDelivered">0</span>
+                            <span class="metric-label">Delivered</span>
+                        </div>
+                        <div class="metric-card">
+                            <span class="metric-value" id="mTotal">0</span>
+                            <span class="metric-label">Total Spawned</span>
+                        </div>
+                    </div>
+
+                    <h2 class="section-title">Performance Analytics</h2>
+                    <div class="analytics-list">
+                        <div class="analytics-item">
+                            <span class="metric-label">Wait (Avg/Min/Max)</span>
+                            <span class="analytics-value" id="mWaitStats">0/0/0</span>
+                        </div>
+                        <div class="analytics-item">
+                            <span class="metric-label">Avg Trip Duration</span>
+                            <span class="analytics-value" id="mRideAvg">0</span>
+                        </div>
+                        <div class="analytics-item">
+                            <span class="metric-label">Fleet Floors Traveled</span>
+                            <span class="analytics-value" id="mCarDistance">0</span>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Right Elevator Visual Shaft Building Grid -->
+                <section class="panel simulation-panel">
+                    <div id="buildingGrid" class="building"></div>
+                </section>
+            </main>
+        </div>
+
+        <script src="js/app.js"></script>
+    </body>
+
+</html>
